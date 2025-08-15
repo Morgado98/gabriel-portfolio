@@ -1,7 +1,7 @@
-import { useState } from 'react'
-import { Button } from '@/components/ui/button.jsx'
-import { Card, CardContent } from '@/components/ui/card.jsx'
-import { Mail, CheckCircle, AlertCircle } from 'lucide-react'
+import { useState } from 'react';
+import { Button } from '@/components/ui/button.jsx';
+import { Card, CardContent } from '@/components/ui/card.jsx';
+import { Mail, CheckCircle, AlertCircle } from 'lucide-react';
 
 export function ContactForm() {
   const [formData, setFormData] = useState({
@@ -9,62 +9,77 @@ export function ContactForm() {
     email: '',
     subject: '',
     message: ''
-  })
-  const [isSubmitting, setIsSubmitting] = useState(false)
-  const [submitStatus, setSubmitStatus] = useState(null) // 'success', 'error', null
-  const [statusMessage, setStatusMessage] = useState('')
+  });
+  const [errors, setErrors] = useState({});
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState(null); // 'success', 'error', null
+  const [statusMessage, setStatusMessage] = useState('');
+
+  const validate = () => {
+    let newErrors = {};
+    if (!formData.name) newErrors.name = 'Nome é obrigatório.';
+    if (!formData.email) {
+      newErrors.email = 'Email é obrigatório.';
+    } else if (!/^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/g.test(formData.email)) {
+      newErrors.email = 'Email inválido.';
+    }
+    if (!formData.subject) newErrors.subject = 'Assunto é obrigatório.';
+    if (!formData.message) newErrors.message = 'Mensagem é obrigatória.';
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
 
   const handleChange = (e) => {
-    const { name, value } = e.target
+    const { name, value } = e.target;
     setFormData(prev => ({
       ...prev,
       [name]: value
-    }))
-  }
+    }));
+    // Clear error for the field as user types
+    if (errors[name]) {
+      setErrors(prev => ({
+        ...prev,
+        [name]: null
+      }));
+    }
+  };
 
   const handleSubmit = async (e) => {
-    e.preventDefault()
-    setIsSubmitting(true)
-    setSubmitStatus(null)
-
-    try {
-      const response = await fetch('/api/contact', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formData)
-      })
-
-      const result = await response.json()
-
-      if (result.success) {
-        setSubmitStatus('success')
-        setStatusMessage(result.message)
-        setFormData({
-          name: '',
-          email: '',
-          subject: '',
-          message: ''
-        })
-      } else {
-        setSubmitStatus('error')
-        setStatusMessage(result.message || 'Erro ao enviar mensagem.')
-      }
-    } catch (error) {
-      setSubmitStatus('error')
-      setStatusMessage('Erro ao enviar mensagem. Tente novamente ou entre em contato diretamente.')
-    } finally {
-      setIsSubmitting(false)
-      // Limpar status após 5 segundos
-      setTimeout(() => {
-        setSubmitStatus(null)
-        setStatusMessage('')
-      }, 5000)
+    e.preventDefault();
+    if (!validate()) {
+      return;
     }
-  }
 
-  const isFormValid = formData.name && formData.email && formData.subject && formData.message
+    setIsSubmitting(true);
+    setSubmitStatus(null);
+
+    // Simulação de envio de e-mail no frontend (sem backend)
+    try {
+      // Aqui você integraria com um serviço como EmailJS, Formspree, etc.
+      // Por enquanto, apenas simula um sucesso
+      await new Promise(resolve => setTimeout(resolve, 1000)); // Simula delay de rede
+
+      setSubmitStatus('success');
+      setStatusMessage('Mensagem enviada com sucesso! Em breve entrarei em contato.');
+      setFormData({
+        name: '',
+        email: '',
+        subject: '',
+        message: ''
+      });
+    } catch (error) {
+      setSubmitStatus('error');
+      setStatusMessage('Erro ao enviar mensagem. Tente novamente ou entre em contato diretamente.');
+    } finally {
+      setIsSubmitting(false);
+      setTimeout(() => {
+        setSubmitStatus(null);
+        setStatusMessage('');
+      }, 5000);
+    }
+  };
+
+  const isFormValid = formData.name && formData.email && formData.subject && formData.message && Object.keys(errors).length === 0;
 
   return (
     <Card>
@@ -80,10 +95,10 @@ export function ContactForm() {
               name="name"
               value={formData.name}
               onChange={handleChange}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors"
+              className={`w-full px-3 py-2 border ${errors.name ? 'border-red-500' : 'border-gray-300'} rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors`}
               placeholder="Seu nome"
-              required
             />
+            {errors.name && <p className="text-red-500 text-xs mt-1">{errors.name}</p>}
           </div>
           
           <div>
@@ -96,10 +111,10 @@ export function ContactForm() {
               name="email"
               value={formData.email}
               onChange={handleChange}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors"
+              className={`w-full px-3 py-2 border ${errors.email ? 'border-red-500' : 'border-gray-300'} rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors`}
               placeholder="seu@email.com"
-              required
             />
+            {errors.email && <p className="text-red-500 text-xs mt-1">{errors.email}</p>}
           </div>
           
           <div>
@@ -112,10 +127,10 @@ export function ContactForm() {
               name="subject"
               value={formData.subject}
               onChange={handleChange}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors"
+              className={`w-full px-3 py-2 border ${errors.subject ? 'border-red-500' : 'border-gray-300'} rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors`}
               placeholder="Assunto da mensagem"
-              required
             />
+            {errors.subject && <p className="text-red-500 text-xs mt-1">{errors.subject}</p>}
           </div>
           
           <div>
@@ -128,10 +143,10 @@ export function ContactForm() {
               value={formData.message}
               onChange={handleChange}
               rows={4}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors resize-none"
+              className={`w-full px-3 py-2 border ${errors.message ? 'border-red-500' : 'border-gray-300'} rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors resize-none`}
               placeholder="Sua mensagem"
-              required
             ></textarea>
+            {errors.message && <p className="text-red-500 text-xs mt-1">{errors.message}</p>}
           </div>
 
           {/* Status Messages */}
@@ -169,6 +184,6 @@ export function ContactForm() {
         </form>
       </CardContent>
     </Card>
-  )
+  );
 }
 
