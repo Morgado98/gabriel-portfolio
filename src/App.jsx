@@ -8,7 +8,7 @@ import { ContactForm } from './components/ContactForm.jsx'
 import './App.css'
 
 // Importando assets
-import gabrielProfile from './assets/gabriel-profile.jpeg'
+import gabrielProfile from './assets/gabriel-profile.png'
 import sqlServerIcon from './assets/sql-server-icon.png'
 import oracleIcon from './assets/oracle-icon.jpg'
 import mysqlIcon from './assets/mysql-icon.png'
@@ -29,7 +29,19 @@ import valluEngenhariaPreview from '/images/vallu_engenharia_preview.webp'
 import abelFutsalLogo from '/images/abel_futsal_logo.png'
 
 function App() {
-  const [activeSection, setActiveSection] = useState('inicio')
+  const [activeSection, setActiveSection] = useState("inicio");
+  const [selectedCategory, setSelectedCategory] = useState("Todos");
+
+  const allTechnologies = [
+    ...new Set(projects.flatMap((project) => project.technologies)),
+  ];
+  const categories = ["Todos", ...allTechnologies];
+
+  const filteredProjects = projects.filter((project) =>
+    selectedCategory === "Todos"
+      ? true
+      : project.technologies.includes(selectedCategory)
+  );
 
   // Scroll suave para seções
   const scrollToSection = (sectionId) => {
@@ -180,7 +192,8 @@ function App() {
       technologies: ['HTML', 'CSS', 'JavaScript', 'Web Design'],
       icon: ExternalLink,
       link: 'https://valluengenhariaetopografia.com.br/',
-      image: valluEngenhariaPreview
+      image: valluEngenhariaPreview,
+      loading: "lazy"
     },
     {
       title: 'Abel Futsal Brusque',
@@ -188,7 +201,24 @@ function App() {
       technologies: ['HTML', 'CSS', 'JavaScript', 'Web Design'],
       icon: ExternalLink,
       link: 'https://abelfutsalbrusque.vercel.app/',
-      image: abelFutsalLogo
+      image: abelFutsalLogo,
+      loading: "lazy"
+    },
+    {
+      title: 'Meu Perfil no LinkedIn',
+      description: 'Conecte-se comigo no LinkedIn para ver minha experiência profissional completa e minhas conexões.',
+      technologies: ['Redes Sociais', 'Networking'],
+      icon: Linkedin,
+      link: 'https://www.linkedin.com/in/gabriel-morgado-s-merchor/',
+      image: null
+    },
+    {
+      title: 'Meu GitHub',
+      description: 'Explore meus projetos de código aberto e contribuições no GitHub.',
+      technologies: ['Desenvolvimento', 'Versionamento', 'Código Aberto'],
+      icon: Github,
+      link: 'https://github.com/Morgado98',
+      image: null
     }
   ]
 
@@ -278,6 +308,7 @@ function App() {
                     src={gabrielProfile} 
                     alt="Gabriel Morgado" 
                     className="w-full h-full object-cover"
+                    loading="lazy"
                   />
                 </div>
                 <div className="absolute -top-4 -right-4 w-16 h-16 bg-blue-600 rounded-full flex items-center justify-center shadow-lg">
@@ -546,12 +577,25 @@ function App() {
             className="text-center mb-12"
           >
             <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-4">
-              Projetos
+              Meus Projetos
             </h2>
             <p className="text-lg text-gray-600">
-              Alguns dos meus principais trabalhos e conquistas
+              Explore alguns dos meus trabalhos e contribuições
             </p>
           </motion.div>
+
+          <div className="flex flex-wrap justify-center gap-3 mb-8">
+            {categories.map((category) => (
+              <Button
+                key={category}
+                variant={selectedCategory === category ? "default" : "outline"}
+                onClick={() => setSelectedCategory(category)}
+                className={selectedCategory === category ? "bg-blue-600 text-white" : "border-blue-600 text-blue-600 hover:bg-blue-50"}
+              >
+                {category}
+              </Button>
+            ))}
+          </div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             {projects.map((project, index) => (
@@ -565,27 +609,35 @@ function App() {
               >
                 {project.image && (
                   <div className="h-48 w-full overflow-hidden flex items-center justify-center">
-                    <img 
-                      src={project.image} 
-                      alt={project.title}
-                      className="w-full h-full object-contain project-image"
-                    />
+                  <img 
+                    src={project.image} 
+                    alt={project.title}
+                    className="w-full h-48 object-cover rounded-t-lg"
+                    loading="lazy"
+                  />
                   </div>
                 )}
                 <div className="p-6">
                   <h3 className="text-xl font-semibold text-gray-900 mb-2 flex items-center">
-                    {project.icon && <project.icon className="w-5 h-5 text-blue-600 mr-2" />}
-                    {project.title}
-                  </h3>
-                  <p className="text-gray-600 mb-4">{project.description}</p>
+                    {project.icon && <project.icon className="w-5 h-5 text-blue-60                <div className="p-6">
+                  <h3 className="text-xl font-bold text-gray-900 mb-2">{project.title}</h3>
+                  <p className="text-gray-600 text-sm mb-4">{project.description}</p>
                   <div className="flex flex-wrap gap-2 mb-4">
-                    {project.technologies.map((tech, i) => (
-                      <Badge key={i} variant="outline" className="text-blue-600 border-blue-200">
-                        {tech}
-                      </Badge>
+                    {project.technologies.map((tech, techIndex) => (
+                      <Badge key={techIndex} variant="secondary">{tech}</Badge>
                     ))}
                   </div>
                   {project.link && (
+                    <a 
+                      href={project.link} 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center text-blue-600 hover:text-blue-800 transition-colors font-medium"
+                    >
+                      Ver Projeto <ExternalLink className="w-4 h-4 ml-2" />
+                    </a>
+                  )}
+                </div>  {project.link && (
                     <Button 
                       variant="outline" 
                       className="w-full border-blue-600 text-blue-600 hover:bg-blue-50"
