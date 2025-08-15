@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import { Button } from '@/components/ui/button.jsx'
 import { Card, CardContent } from '@/components/ui/card.jsx'
 import { Badge } from '@/components/ui/badge.jsx'
-import { Mail, Phone, MapPin, Github, Linkedin, ExternalLink, Database, Code, Server, BarChart3, Users, Award } from 'lucide-react'
+import { Mail, Phone, MapPin, Github, Linkedin, ExternalLink, Database, Code, Server, BarChart3, Users, Award, Moon, Sun } from 'lucide-react'
 import { motion } from 'framer-motion'
 import { ContactForm } from './components/ContactForm.jsx'
 import './App.css'
@@ -32,6 +32,21 @@ function App() {
   const [activeSection, setActiveSection] = useState("inicio");
   const [selectedCategory, setSelectedCategory] = useState("Todos");
   const [isLoading, setIsLoading] = useState(true); // Novo estado para carregamento
+  const [theme, setTheme] = useState(() => {
+    if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+      return 'dark';
+    }
+    return 'light';
+  });
+
+  useEffect(() => {
+    document.documentElement.classList.remove('light', 'dark');
+    document.documentElement.classList.add(theme);
+  }, [theme]);
+
+  const toggleTheme = () => {
+    setTheme((prevTheme) => (prevTheme === 'light' ? 'dark' : 'light'));
+  };
 
   useEffect(() => {
     // Simula um tempo de carregamento para demonstrar o spinner
@@ -270,6 +285,14 @@ function App() {
                     </button>
                   ))}
                 </div>
+                <button
+                  id="theme-toggle"
+                  aria-label="Alternar tema"
+                  onClick={toggleTheme}
+                  className="p-2 rounded-md text-gray-700 hover:text-blue-600 hover:bg-gray-50 transition-colors"
+                >
+                  {theme === 'light' ? <Moon className="w-5 h-5" /> : <Sun className="w-5 h-5" />}
+                </button>
               </div>
             </div>
           </nav>
