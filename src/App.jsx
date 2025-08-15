@@ -296,15 +296,15 @@ function App() {
                   </p>
                   <div className="flex flex-col sm:flex-row gap-4">
                     <Button 
-                      onClick={() => scrollToSection('projetos')}
-                      className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3"
+                      onClick={() => scrollToSection("projetos")}
+                      className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 hover-lift"
                     >
                       Ver Projetos
                     </Button>
                     <Button 
                       variant="outline" 
-                      onClick={() => scrollToSection('contato')}
-                      className="border-blue-600 text-blue-600 hover:bg-blue-50 px-8 py-3"
+                      onClick={() => scrollToSection("contato")}
+                      className="border-blue-600 text-blue-600 hover:bg-blue-50 px-8 py-3 hover-lift"
                     >
                       Entre em Contato
                     </Button>

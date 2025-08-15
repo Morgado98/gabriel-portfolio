@@ -332,3 +332,16 @@ a:focus {
 }
 
 
+
+
+/* Micro-interações para botões */
+.hover-lift {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.hover-lift:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+}
+
+
