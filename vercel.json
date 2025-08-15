@@ -1,13 +1,22 @@
 {
+  "build": {
+    "env": {
+      "NODE_VERSION": "18"
+    }
+  },
   "functions": {
     "api/contact.py": {
       "runtime": "python@3.9"
     }
   },
-  "rewrites": [
+  "routes": [
     {
-      "source": "/(.*)",
-      "destination": "/index.html"
+      "src": "/api/(.*)",
+      "dest": "/api/contact.py"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/index.html"
     }
   ]
 }
