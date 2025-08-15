@@ -3,7 +3,7 @@ import { Button } from '@/components/ui/button.jsx'
 import { Card, CardContent } from '@/components/ui/card.jsx'
 import { Badge } from '@/components/ui/badge.jsx'
 import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog.jsx'
-import { Mail, Phone, MapPin, Github, Linkedin, ExternalLink, Database, Code, Server, BarChart3, Users, Award, Moon, Sun } from 'lucide-react'
+import { Mail, Phone, MapPin, Github, Linkedin, ExternalLink, Database, Code, Server, BarChart3, Users, Award, Moon, Sun, Menu, X } from 'lucide-react'
 import { motion } from 'framer-motion'
 import { ContactForm } from './components/ContactForm.jsx'
 import './App.css'
@@ -33,6 +33,7 @@ function App() {
   const [activeSection, setActiveSection] = useState("inicio");
   const [selectedCategory, setSelectedCategory] = useState("Todos");
   const [isLoading, setIsLoading] = useState(true); // Novo estado para carregamento
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false); // Estado para menu mobile
   const [theme, setTheme] = useState(() => {
     if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
       return 'dark';
@@ -135,7 +136,13 @@ function App() {
     if (element) {
       element.scrollIntoView({ behavior: 'smooth' })
       setActiveSection(sectionId)
+      setIsMobileMenuOpen(false) // Fechar menu mobile automaticamente
     }
+  }
+
+  // Alternar menu mobile
+  const toggleMobileMenu = () => {
+    setIsMobileMenuOpen(!isMobileMenuOpen)
   }
 
   // Detectar seção ativa durante o scroll
@@ -161,6 +168,31 @@ function App() {
     window.addEventListener('scroll', handleScroll)
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
+
+  // Fechar menu mobile ao clicar fora ou pressionar Escape
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (isMobileMenuOpen && !event.target.closest('nav')) {
+        setIsMobileMenuOpen(false)
+      }
+    }
+
+    const handleEscapeKey = (event) => {
+      if (event.key === 'Escape' && isMobileMenuOpen) {
+        setIsMobileMenuOpen(false)
+      }
+    }
+
+    if (isMobileMenuOpen) {
+      document.addEventListener('mousedown', handleClickOutside)
+      document.addEventListener('keydown', handleEscapeKey)
+    }
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside)
+      document.removeEventListener('keydown', handleEscapeKey)
+    }
+  }, [isMobileMenuOpen])
 
   const skillsWithIcons = [
     { name: 'SQL Server', icon: sqlServerIcon, category: 'Bancos de Dados' },
@@ -266,6 +298,8 @@ function App() {
                 >
                   Gabriel Morgado
                 </motion.div>
+                
+                {/* Menu Desktop */}
                 <div className="hidden md:flex space-x-8">
                   {[
                     { id: 'inicio', label: 'Início' },
@@ -287,15 +321,60 @@ function App() {
                     </button>
                   ))}
                 </div>
-                <button
-                  id="theme-toggle"
-                  aria-label="Alternar tema"
-                  onClick={toggleTheme}
-                  className="p-2 rounded-md text-gray-700 hover:text-blue-600 hover:bg-gray-50 transition-colors"
-                >
-                  {theme === 'light' ? <Moon className="w-5 h-5" /> : <Sun className="w-5 h-5" />}
-                </button>
+
+                {/* Botões de ação */}
+                <div className="flex items-center space-x-2">
+                  <button
+                    id="theme-toggle"
+                    aria-label="Alternar tema"
+                    onClick={toggleTheme}
+                    className="p-2 rounded-md text-gray-700 hover:text-blue-600 hover:bg-gray-50 transition-colors"
+                  >
+                    {theme === 'light' ? <Moon className="w-5 h-5" /> : <Sun className="w-5 h-5" />}
+                  </button>
+                  
+                  {/* Botão Menu Mobile */}
+                  <button
+                    onClick={toggleMobileMenu}
+                    className="md:hidden p-2 rounded-md text-gray-700 hover:text-blue-600 hover:bg-gray-50 transition-colors"
+                    aria-label="Menu de navegação"
+                  >
+                    {isMobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+                  </button>
+                </div>
               </div>
+
+              {/* Menu Mobile */}
+              {isMobileMenuOpen && (
+                <motion.div
+                  initial={{ opacity: 0, y: -10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -10 }}
+                  className="md:hidden absolute top-full left-0 right-0 bg-white/95 backdrop-blur-md border-b border-gray-200 shadow-lg"
+                >
+                  <div className="px-4 py-2 space-y-1">
+                    {[
+                      { id: 'inicio', label: 'Início' },
+                      { id: 'sobre', label: 'Sobre' },
+                      { id: 'habilidades', label: 'Habilidades' },
+                      { id: 'projetos', label: 'Projetos' },
+                      { id: 'contato', label: 'Contato' }
+                    ].map((item) => (
+                      <button
+                        key={item.id}
+                        onClick={() => scrollToSection(item.id)}
+                        className={`w-full text-left px-3 py-3 rounded-md text-sm font-medium transition-colors border-b border-gray-100 last:border-b-0 ${
+                          activeSection === item.id
+                            ? 'text-blue-600 bg-blue-50'
+                            : 'text-gray-700 hover:text-blue-600 hover:bg-gray-50'
+                        }`}
+                      >
+                        {item.label}
+                      </button>
+                    ))}
+                  </div>
+                </motion.div>
+              )}
             </div>
           </nav>
 
@@ -388,18 +467,22 @@ function App() {
                   <div className="space-y-4 text-gray-600">
                     <p>
                       Sou um profissional de Tecnologia da Informação com sólida experiência em administração 
-                      de bancos de dados, especializado em SQL Server e MariaDB. Ao longo de mais de 4 anos 
-                      de carreira, desenvolvi expertise em SQL Tuning, modelagem e desenvolvimento de estruturas 
-                      de banco de dados.
+                      de bancos de dados, especializado em SQL Server e MariaDB. 
                     </p>
                     <p>
-                      Minha experiência abrange Business Intelligence (SSIS, SSAS, SSRS, Metabase BI), 
-                      com foco na criação de dashboards estratégicos integrados ao ERP e GLPI para apoio 
-                      à tomada de decisões empresariais.
+                      Ao longo de mais de 4 anos de carreira, desenvolvi expertise em SQL Tuning, 
+                      modelagem e desenvolvimento de estruturas de banco de dados, sempre focando 
+                      em soluções eficientes e escaláveis.
+                    </p>
+                    <p>
+                      Minha experiência abrange Business Intelligence com ferramentas como SSIS, SSAS, 
+                      SSRS e Metabase BI. Tenho foco especial na criação de dashboards estratégicos 
+                      integrados ao ERP e GLPI para apoio à tomada de decisões empresariais.
                     </p>
                     <p>
                       Atualmente, estou cursando Pós-graduação em Ciência de Dados e Inteligência Artificial, 
-                      expandindo meus conhecimentos para acompanhar as tendências tecnológicas mais atuais.
+                      expandindo meus conhecimentos para acompanhar as tendências tecnológicas mais atuais 
+                      e agregar ainda mais valor aos projetos em que atuo.
                     </p>
                   </div>
                 </motion.div>
