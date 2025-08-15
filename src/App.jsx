@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import { Button } from '@/components/ui/button.jsx'
 import { Card, CardContent } from '@/components/ui/card.jsx'
 import { Badge } from '@/components/ui/badge.jsx'
+import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog.jsx'
 import { Mail, Phone, MapPin, Github, Linkedin, ExternalLink, Database, Code, Server, BarChart3, Users, Award, Moon, Sun } from 'lucide-react'
 import { motion } from 'framer-motion'
 import { ContactForm } from './components/ContactForm.jsx'
@@ -38,6 +39,68 @@ function App() {
     }
     return 'light';
   });
+
+  // Definindo projetos antes de usar
+  const projects = [
+    {
+      title: 'Otimização de Performance de Banco de Dados',
+      description: 'Implementação de rotinas eficientes de backup e melhorias contínuas de performance em ambiente SQL Server.',
+      technologies: ['SQL Server', 'T-SQL', 'Performance Tuning'],
+      icon: Database,
+      link: null,
+      image: null
+    },
+    {
+      title: 'Sistema HelpDesk GLPI',
+      description: 'Implementação e administração completa do sistema HelpDesk GLPI, melhorando significativamente o suporte técnico.',
+      technologies: ['GLPI', 'Linux', 'MySQL'],
+      icon: Users,
+      link: null,
+      image: null
+    },
+    {
+      title: 'Dashboards Estratégicos com Metabase BI',
+      description: 'Desenvolvimento de dashboards integrados com sistema ERP e GLPI para análise de dados e suporte à decisão.',
+      technologies: ['Metabase BI', 'SQL', 'Business Intelligence'],
+      icon: BarChart3,
+      link: null,
+      image: null
+    },
+    {
+      title: 'Vallu Engenharia e Topografia',
+      description: 'Website institucional desenvolvido para a empresa Vallu Engenharia e Topografia.',
+      technologies: ['HTML', 'CSS', 'JavaScript', 'Web Design'],
+      icon: ExternalLink,
+      link: 'https://valluengenhariaetopografia.com.br/',
+      image: valluEngenhariaPreview,
+      loading: "lazy"
+    },
+    {
+      title: 'Abel Futsal Brusque',
+      description: 'Website para o time de futsal Abel Futsal Brusque, com informações sobre o time, jogos e notícias.',
+      technologies: ['HTML', 'CSS', 'JavaScript', 'Web Design'],
+      icon: ExternalLink,
+      link: 'https://abelfutsalbrusque.vercel.app/',
+      image: abelFutsalLogo,
+      loading: "lazy"
+    },
+    {
+      title: 'Meu Perfil no LinkedIn',
+      description: 'Conecte-se comigo no LinkedIn para ver minha experiência profissional completa e minhas conexões.',
+      technologies: ['Redes Sociais', 'Networking'],
+      icon: Linkedin,
+      link: 'https://www.linkedin.com/in/gabriel-morgado-s-merchor/',
+      image: null
+    },
+    {
+      title: 'Meu GitHub',
+      description: 'Explore meus projetos de código aberto e contribuições no GitHub.',
+      technologies: ['Desenvolvimento', 'Versionamento', 'Código Aberto'],
+      icon: Github,
+      link: 'https://github.com/Morgado98',
+      image: null
+    }
+  ]
 
   useEffect(() => {
     document.documentElement.classList.remove('light', 'dark');
@@ -181,67 +244,6 @@ function App() {
         'Troubleshooting avançado de redes',
         'Análise e debug de sistemas ERP'
       ]
-    }
-  ]
-
-  const projects = [
-    {
-      title: 'Otimização de Performance de Banco de Dados',
-      description: 'Implementação de rotinas eficientes de backup e melhorias contínuas de performance em ambiente SQL Server.',
-      technologies: ['SQL Server', 'T-SQL', 'Performance Tuning'],
-      icon: Database,
-      link: null,
-      image: null
-    },
-    {
-      title: 'Sistema HelpDesk GLPI',
-      description: 'Implementação e administração completa do sistema HelpDesk GLPI, melhorando significativamente o suporte técnico.',
-      technologies: ['GLPI', 'Linux', 'MySQL'],
-      icon: Users,
-      link: null,
-      image: null
-    },
-    {
-      title: 'Dashboards Estratégicos com Metabase BI',
-      description: 'Desenvolvimento de dashboards integrados com sistema ERP e GLPI para análise de dados e suporte à decisão.',
-      technologies: ['Metabase BI', 'SQL', 'Business Intelligence'],
-      icon: BarChart3,
-      link: null,
-      image: null
-    },
-    {
-      title: 'Vallu Engenharia e Topografia',
-      description: 'Website institucional desenvolvido para a empresa Vallu Engenharia e Topografia.',
-      technologies: ['HTML', 'CSS', 'JavaScript', 'Web Design'],
-      icon: ExternalLink,
-      link: 'https://valluengenhariaetopografia.com.br/',
-      image: valluEngenhariaPreview,
-      loading: "lazy"
-    },
-    {
-      title: 'Abel Futsal Brusque',
-      description: 'Website para o time de futsal Abel Futsal Brusque, com informações sobre o time, jogos e notícias.',
-      technologies: ['HTML', 'CSS', 'JavaScript', 'Web Design'],
-      icon: ExternalLink,
-      link: 'https://abelfutsalbrusque.vercel.app/',
-      image: abelFutsalLogo,
-      loading: "lazy"
-    },
-    {
-      title: 'Meu Perfil no LinkedIn',
-      description: 'Conecte-se comigo no LinkedIn para ver minha experiência profissional completa e minhas conexões.',
-      technologies: ['Redes Sociais', 'Networking'],
-      icon: Linkedin,
-      link: 'https://www.linkedin.com/in/gabriel-morgado-s-merchor/',
-      image: null
-    },
-    {
-      title: 'Meu GitHub',
-      description: 'Explore meus projetos de código aberto e contribuições no GitHub.',
-      technologies: ['Desenvolvimento', 'Versionamento', 'Código Aberto'],
-      icon: Github,
-      link: 'https://github.com/Morgado98',
-      image: null
     }
   ]
 
@@ -529,32 +531,59 @@ function App() {
                     viewport={{ once: true }}
                     className="bg-white rounded-lg shadow-md overflow-hidden card-enhanced"
                   >
-                    {project.image && (
-                      <div className="h-48 w-full overflow-hidden flex items-center justify-center">
-                      <img 
-                        src={project.image} 
-                        alt={project.title}
-                        className="w-full h-48 object-cover rounded-t-lg"
-                        loading="lazy"
-                      />
-                      </div>
-                    )}
                     <div className="p-6">
+                      {project.image ? (
+                        <Dialog>
+                          <DialogTrigger asChild>
+                            <div className="relative cursor-pointer group mb-4">
+                              <img
+                                src={project.image}
+                                alt={project.title}
+                                className="w-full h-48 object-cover rounded-md transition-transform group-hover:scale-105"
+                                loading="lazy"
+                              />
+                              <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-20 transition-all duration-300 rounded-md flex items-center justify-center">
+                                <ExternalLink className="w-8 h-8 text-white opacity-0 group-hover:opacity-100 transition-opacity" />
+                              </div>
+                            </div>
+                          </DialogTrigger>
+                          <DialogContent className="max-w-4xl">
+                            <img
+                              src={project.image}
+                              alt={project.title}
+                              className="w-full h-auto rounded-md"
+                            />
+                          </DialogContent>
+                        </Dialog>
+                      ) : (
+                        <div className="w-full h-48 bg-gradient-to-br from-blue-100 to-blue-200 rounded-md mb-4 flex items-center justify-center">
+                          <project.icon className="w-16 h-16 text-blue-600" />
+                        </div>
+                      )}
+
                       <h3 className="text-xl font-bold text-gray-900 mb-2">{project.title}</h3>
-                      <p className="text-gray-600 text-sm mb-4">{project.description}</p>
+                      <p className="text-gray-600 mb-4 flex-grow">{project.description}</p>
+                      
                       <div className="flex flex-wrap gap-2 mb-4">
                         {project.technologies.map((tech, techIndex) => (
-                          <Badge key={techIndex} variant="secondary">{tech}</Badge>
+                          <Badge 
+                            key={techIndex} 
+                            variant="secondary"
+                            className="bg-blue-100 text-blue-800 hover:bg-blue-200 transition-colors"
+                          >
+                            {tech}
+                          </Badge>
                         ))}
                       </div>
+                      
                       {project.link && (
-                        <a 
-                          href={project.link} 
-                          target="_blank" 
+                        <a
+                          href={project.link}
+                          target="_blank"
                           rel="noopener noreferrer"
-                          className="inline-flex items-center text-blue-600 hover:text-blue-800 transition-colors font-medium"
+                          className="inline-flex items-center text-blue-600 hover:text-blue-800 font-medium transition-colors hover-lift"
                         >
-                          Ver Projeto <ExternalLink className="w-4 h-4 ml-2" />
+                          Ver Projeto <ExternalLink className="w-4 h-4 ml-1" />
                         </a>
                       )}
                     </div>
