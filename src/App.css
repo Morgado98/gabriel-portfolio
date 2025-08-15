@@ -456,3 +456,244 @@ body {
 }
 
 
+
+
+/* ===== CORREÇÕES CROSS-BROWSER ===== */
+
+/* Firefox - Correções específicas */
+@-moz-document url-prefix() {
+  /* Menu mobile - melhor posicionamento no Firefox */
+  .mobile-nav-visible {
+    z-index: 9999;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Scrollbar personalizada para Firefox */
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: #cbd5e1 #f1f5f9;
+  }
+  
+  /* Correção de fontes no Firefox */
+  body {
+    font-family: 'Inter', -moz-system-ui, system-ui, sans-serif;
+  }
+}
+
+/* Safari - Correções específicas */
+@supports (-webkit-appearance: none) {
+  /* Animações CSS - compatibilidade com Safari */
+  .hover-lift {
+    -webkit-transform: translateZ(0);
+    transform: translateZ(0);
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+  }
+  
+  .hover-lift:hover {
+    -webkit-transform: translateY(-3px) translateZ(0);
+    transform: translateY(-3px) translateZ(0);
+  }
+  
+  /* Backdrop filter para Safari */
+  .card-enhanced {
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+  }
+  
+  .bg-white\/80 {
+    -webkit-backdrop-filter: blur(8px);
+    backdrop-filter: blur(8px);
+  }
+  
+  /* Smooth scrolling para Safari */
+  html {
+    -webkit-scroll-behavior: smooth;
+    scroll-behavior: smooth;
+  }
+  
+  /* Correção de renderização de imagens no Safari */
+  img {
+    -webkit-transform: translateZ(0);
+    transform: translateZ(0);
+  }
+}
+
+/* Edge - Correções específicas */
+@supports (-ms-ime-align: auto) {
+  /* Renderização de fontes no Edge */
+  body {
+    font-family: 'Inter', -ms-system-ui, system-ui, sans-serif;
+    text-rendering: optimizeLegibility;
+  }
+  
+  /* Grid layout para Edge */
+  .grid {
+    display: -ms-grid;
+    display: grid;
+  }
+}
+
+/* Webkit (Chrome, Safari, Edge Chromium) */
+@media screen and (-webkit-min-device-pixel-ratio: 0) {
+  /* Otimização de renderização */
+  * {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  
+  /* Correção de overflow em containers flex */
+  .flex {
+    min-width: 0;
+  }
+}
+
+/* Correções gerais para todos os navegadores */
+
+/* Fallback para navegadores que não suportam backdrop-filter */
+@supports not (backdrop-filter: blur(10px)) {
+  .card-enhanced {
+    background: rgba(255, 255, 255, 0.95);
+  }
+  
+  .bg-white\/80 {
+    background: rgba(255, 255, 255, 0.9);
+  }
+  
+  .mobile-nav-visible {
+    background: rgba(255, 255, 255, 0.98);
+  }
+}
+
+/* Fallback para navegadores que não suportam CSS Grid */
+@supports not (display: grid) {
+  .grid {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  
+  .grid > * {
+    flex: 1 1 auto;
+    min-width: 250px;
+    margin: 0.5rem;
+  }
+}
+
+/* Correções de acessibilidade para todos os navegadores */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .text-gray-600 {
+    color: #000000;
+  }
+  
+  .text-gray-700 {
+    color: #000000;
+  }
+  
+  .border-gray-200 {
+    border-color: #000000;
+  }
+  
+  .card-enhanced {
+    border: 2px solid #000000;
+  }
+}
+
+/* Print styles */
+@media print {
+  .fixed {
+    position: static !important;
+  }
+  
+  .hover-lift:hover {
+    transform: none !important;
+    box-shadow: none !important;
+  }
+  
+  .bg-gradient-to-br {
+    background: white !important;
+  }
+  
+  .text-blue-600 {
+    color: #000000 !important;
+  }
+}
+
+/* Mobile device optimizations */
+@media (max-width: 768px) {
+  /* Touch targets - mínimo 44px para acessibilidade */
+  button, a, input, select, textarea {
+    min-height: 44px;
+    min-width: 44px;
+  }
+  
+  /* Prevent zoom on input focus (iOS) */
+  input, select, textarea {
+    font-size: 16px;
+  }
+  
+  /* Menu mobile - fechar automaticamente após seleção */
+  .mobile-nav-visible a {
+    padding: 12px 16px;
+    display: block;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  }
+  
+  .mobile-nav-visible a:last-child {
+    border-bottom: none;
+  }
+}
+
+/* Correção para links externos - target="_blank" rel="noopener" */
+a[target="_blank"] {
+  position: relative;
+}
+
+a[target="_blank"]:after {
+  content: "↗";
+  font-size: 0.8em;
+  margin-left: 0.2em;
+  opacity: 0.7;
+}
+
+/* Melhorias de performance */
+.card-enhanced,
+.hover-lift,
+img {
+  will-change: transform;
+}
+
+/* Correção de quebras de linha estratégicas */
+.text-lg p,
+.text-gray-600 p {
+  line-height: 1.7;
+  word-spacing: 0.1em;
+}
+
+/* Correção de console errors - elementos não encontrados */
+[data-theme] {
+  transition: all 0.3s ease;
+}
+
+/* Otimização de carregamento de imagens */
+img[loading="lazy"] {
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+img[loading="lazy"].loaded {
+  opacity: 1;
+}
+
