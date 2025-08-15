@@ -1,19 +1,12 @@
 {
-  "build": {
-    "env": {
-      "NODE_VERSION": "18"
-    }
-  },
-  "functions": {
-    "api/contact.py": {
-      "runtime": "python@3.9"
-    }
-  },
-  "routes": [
+  "version": 2,
+  "builds": [
     {
-      "src": "/api/(.*)",
-      "dest": "/api/contact.py"
-    },
+      "src": "/*.html",
+      "use": "@vercel/static"
+    }
+  ],
+  "routes": [
     {
       "src": "/(.*)",
       "dest": "/index.html"
