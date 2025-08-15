@@ -26,7 +26,7 @@ import windowsServerIcon from './assets/windows-server-icon.png'
 // Importando imagens de preview dos projetos
 // Os caminhos foram corrigidos para referenciar a pasta public diretamente
 import valluEngenhariaPreview from '/images/vallu_engenharia_preview.webp'
-import abelFutsalPreview from '/images/abel_futsal_preview.jpg'
+import abelFutsalLogo from '/images/abel_futsal_logo.png'
 
 function App() {
   const [activeSection, setActiveSection] = useState('inicio')
@@ -188,7 +188,7 @@ function App() {
       technologies: ['HTML', 'CSS', 'JavaScript', 'Web Design'],
       icon: ExternalLink,
       link: 'https://abelfutsalbrusque.vercel.app/',
-      image: abelFutsalPreview
+      image: abelFutsalLogo
     }
   ]
 
@@ -638,7 +638,9 @@ function App() {
                 </div>
                 <div className="flex items-center">
                   <Phone className="w-5 h-5 text-blue-600 mr-3" />
-                  (11) 99110-5517
+                  <a href="https://wa.me/5511991105517" target="_blank" rel="noopener noreferrer">
+                    (11) 99110-5517
+                  </a>
                 </div>
                 <div className="flex items-center">
                   <MapPin className="w-5 h-5 text-blue-600 mr-3" />
@@ -657,7 +659,7 @@ function App() {
 
             <motion.div
               initial={{ opacity: 0, x: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
+              whileInView={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.6 }}
               viewport={{ once: true }}
             >

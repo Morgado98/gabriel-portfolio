@@ -12,6 +12,7 @@ export function ContactForm() {
   })
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [submitStatus, setSubmitStatus] = useState(null) // 'success', 'error', null
+  const [statusMessage, setStatusMessage] = useState('')
 
   const handleChange = (e) => {
     const { name, value } = e.target
@@ -26,25 +27,40 @@ export function ContactForm() {
     setIsSubmitting(true)
     setSubmitStatus(null)
 
-    // Simular envio do formulário
     try {
-      // Aqui você pode integrar com um serviço de email como EmailJS, Formspree, etc.
-      await new Promise(resolve => setTimeout(resolve, 2000)) // Simular delay
-      
-      // Simular sucesso
-      setSubmitStatus('success')
-      setFormData({
-        name: '',
-        email: '',
-        subject: '',
-        message: ''
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData)
       })
+
+      const result = await response.json()
+
+      if (result.success) {
+        setSubmitStatus('success')
+        setStatusMessage(result.message)
+        setFormData({
+          name: '',
+          email: '',
+          subject: '',
+          message: ''
+        })
+      } else {
+        setSubmitStatus('error')
+        setStatusMessage(result.message || 'Erro ao enviar mensagem.')
+      }
     } catch (error) {
       setSubmitStatus('error')
+      setStatusMessage('Erro ao enviar mensagem. Tente novamente ou entre em contato diretamente.')
     } finally {
       setIsSubmitting(false)
       // Limpar status após 5 segundos
-      setTimeout(() => setSubmitStatus(null), 5000)
+      setTimeout(() => {
+        setSubmitStatus(null)
+        setStatusMessage('')
+      }, 5000)
     }
   }
 
@@ -122,14 +138,14 @@ export function ContactForm() {
           {submitStatus === 'success' && (
             <div className="flex items-center p-3 bg-green-50 border border-green-200 rounded-md text-green-700">
               <CheckCircle className="w-5 h-5 mr-2" />
-              <span>Mensagem enviada com sucesso! Entrarei em contato em breve.</span>
+              <span>{statusMessage}</span>
             </div>
           )}
 
           {submitStatus === 'error' && (
             <div className="flex items-center p-3 bg-red-50 border border-red-200 rounded-md text-red-700">
               <AlertCircle className="w-5 h-5 mr-2" />
-              <span>Erro ao enviar mensagem. Tente novamente ou entre em contato diretamente.</span>
+              <span>{statusMessage}</span>
             </div>
           )}
 

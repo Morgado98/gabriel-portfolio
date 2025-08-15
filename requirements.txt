@@ -1,0 +1,4 @@
+# Dependências para a API de contato
+# Não são necessárias dependências externas para esta implementação básica
+# O Python padrão já inclui smtplib, email, json, http.server e os
+
