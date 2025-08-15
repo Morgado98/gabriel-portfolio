@@ -97,6 +97,7 @@ export function ContactForm() {
               onChange={handleChange}
               className={`w-full px-3 py-2 border ${errors.name ? 'border-red-500' : 'border-gray-300'} rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors`}
               placeholder="Seu nome"
+              aria-required="true"
             />
             {errors.name && <p className="text-red-500 text-xs mt-1">{errors.name}</p>}
           </div>
@@ -113,6 +114,7 @@ export function ContactForm() {
               onChange={handleChange}
               className={`w-full px-3 py-2 border ${errors.email ? 'border-red-500' : 'border-gray-300'} rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors`}
               placeholder="seu@email.com"
+              aria-required="true"
             />
             {errors.email && <p className="text-red-500 text-xs mt-1">{errors.email}</p>}
           </div>
@@ -129,6 +131,7 @@ export function ContactForm() {
               onChange={handleChange}
               className={`w-full px-3 py-2 border ${errors.subject ? 'border-red-500' : 'border-gray-300'} rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors`}
               placeholder="Assunto da mensagem"
+              aria-required="true"
             />
             {errors.subject && <p className="text-red-500 text-xs mt-1">{errors.subject}</p>}
           </div>
@@ -145,6 +148,7 @@ export function ContactForm() {
               rows={4}
               className={`w-full px-3 py-2 border ${errors.message ? 'border-red-500' : 'border-gray-300'} rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors resize-none`}
               placeholder="Sua mensagem"
+              aria-required="true"
             ></textarea>
             {errors.message && <p className="text-red-500 text-xs mt-1">{errors.message}</p>}
           </div>
