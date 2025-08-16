@@ -417,29 +417,20 @@ function App() {
                 <motion.div
                   initial={{ opacity: 0, scale: 0.8 }}
                   animate={{ opacity: 1, scale: 1 }}
-                  transition={{ duration: 0.6, delay: 0.2 }}
-                  className="flex justify-center"
+                  transition={{ duration: 0.6 }}
                 >
-                  <div className="relative">
-                    <div className="w-80 h-80 rounded-full overflow-hidden border-4 border-blue-200 shadow-2xl">
-                      <img 
-                        src={gabrielProfile} 
-                        alt="Gabriel Morgado" 
-                        className="w-full h-full object-cover"
-                        loading="lazy"
-                      />
-                    </div>
-                    <div className="absolute -top-4 -right-4 w-16 h-16 bg-blue-600 rounded-full flex items-center justify-center shadow-lg">
-                      <Database className="w-8 h-8 text-white" />
-                    </div>
-                  </div>
+                  <img
+                    src={gabrielProfile}
+                    alt="Gabriel Morgado"
+                    className="rounded-full w-64 h-64 mx-auto object-cover shadow-lg border-4 border-blue-200"
+                  />
                 </motion.div>
               </div>
             </div>
           </section>
 
-          {/* Seção Sobre */}
-          <section id="sobre" className="py-16 px-4 sm:px-6 lg:px-8 bg-white">
+          {/* Seção Sobre Mim */}
+          <section id="sobre" className="py-16 px-4 sm:px-6 lg:px-8 bg-gray-50">
             <div className="max-w-6xl mx-auto">
               <motion.div
                 initial={{ opacity: 0, y: 30 }}
@@ -520,7 +511,7 @@ function App() {
           </section>
 
           {/* Seção Habilidades */}
-          <section id="habilidades" className="py-16 px-4 sm:px-6 lg:px-8 bg-gray-50">
+          <section id="habilidades" className="py-16 px-4 sm:px-6 lg:px-8">
             <div className="max-w-6xl mx-auto">
               <motion.div
                 initial={{ opacity: 0, y: 30 }}
@@ -530,51 +521,45 @@ function App() {
                 className="text-center mb-12"
               >
                 <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-4">
-                  Habilidades
+                  Minhas Habilidades
                 </h2>
-                <p className="text-lg text-gray-600">
-                  Minhas áreas de expertise técnica
+                <p className="text-lg text-gray-600 max-w-3xl mx-auto">
+                  Tecnologias e ferramentas que domino e utilizo em meus projetos.
                 </p>
               </motion.div>
 
-              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6 mb-12">
-                {skillsWithIcons.map((skill, index) => (
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                {Object.entries(categorizedSkills).map(([category, skills]) => (
                   <motion.div
-                    key={index}
-                    initial={{ opacity: 0, y: 20 }}
+                    key={category}
+                    initial={{ opacity: 0, y: 30 }}
                     whileInView={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.6, delay: index * 0.1 }}
+                    transition={{ duration: 0.6, delay: 0.1 }}
                     viewport={{ once: true }}
-                    whileHover={{ scale: 1.05 }}
-                    className="bg-white rounded-lg p-6 shadow-md hover:shadow-lg transition-all duration-300 flex flex-col items-center justify-between skill-card"
+                    className="bg-white rounded-lg shadow-md p-6"
                   >
-                    <div className="flex flex-col items-center text-center flex-grow">
-                      <img 
-                        src={skill.icon} 
-                        alt={skill.name}
-                        className="w-12 h-12 object-contain mb-3"
-                      />
-                      <h3 className="font-semibold text-gray-900 text-sm">{skill.name}</h3>
-                    </div>
+                    <h3 className="text-xl font-bold text-gray-900 mb-4 flex items-center">
+                      {category === 'Bancos de Dados' && <Database className="w-6 h-6 text-blue-600 mr-2" />}
+                      {category === 'Business Intelligence & ETL' && <BarChart3 className="w-6 h-6 text-blue-600 mr-2" />}
+                      {category === 'Linguagens & Scripts' && <Code className="w-6 h-6 text-blue-600 mr-2" />}
+                      {category === 'Desenvolvimento & Ferramentas' && <Server className="w-6 h-6 text-blue-600 mr-2" />}
+                      {category === 'Infraestrutura & Redes' && <Server className="w-6 h-6 text-blue-600 mr-2" />}
+                      {category === 'Suporte & Gestão' && <Users className="w-6 h-6 text-blue-600 mr-2" />}
+                      {category}
+                    </h3>
+                    <ul className="list-disc list-inside space-y-2 text-gray-600">
+                      {skills.map((skill, index) => (
+                        <li key={index}>{skill}</li>
+                      ))}
+                    </ul>
                   </motion.div>
                 ))}
               </div>
-
-              {Object.entries(categorizedSkills).map(([category, skills]) => (
-                <div key={category} className="mb-8">
-                  <h3 className="text-xl font-bold text-gray-900 mb-4 border-b pb-2">{category}</h3>
-                  <div className="flex flex-wrap gap-3">
-                    {skills.map((skill, index) => (
-                      <Badge key={index} variant="outline" className="px-4 py-2 text-base">{skill}</Badge>
-                    ))}
-                  </div>
-                </div>
-              ))}
             </div>
           </section>
 
           {/* Seção Projetos */}
-          <section id="projetos" className="py-16 px-4 sm:px-6 lg:px-8 bg-white">
+          <section id="projetos" className="py-16 px-4 sm:px-6 lg:px-8 bg-gray-50">
             <div className="max-w-6xl mx-auto">
               <motion.div
                 initial={{ opacity: 0, y: 30 }}
@@ -584,27 +569,32 @@ function App() {
                 className="text-center mb-12"
               >
                 <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-4">
-                  Meus Projetos
+                  Projetos
                 </h2>
-                <p className="text-lg text-gray-600">
-                  Explore alguns dos meus trabalhos e contribuições
+                <p className="text-lg text-gray-600 max-w-3xl mx-auto">
+                  Alguns dos meus principais trabalhos e conquistas
                 </p>
               </motion.div>
 
+              {/* Filtros de Categoria */}
               <div className="flex flex-wrap justify-center gap-3 mb-8">
                 {categories.map((category) => (
                   <Button
                     key={category}
                     variant={selectedCategory === category ? "default" : "outline"}
                     onClick={() => setSelectedCategory(category)}
-                    className={selectedCategory === category ? "bg-blue-600 text-white" : "border-blue-600 text-blue-600 hover:bg-blue-50"}
+                    className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
+                      selectedCategory === category
+                        ? "bg-blue-600 text-white hover:bg-blue-700"
+                        : "border-blue-600 text-blue-600 hover:bg-blue-50"
+                    }`}
                   >
                     {category}
                   </Button>
                 ))}
               </div>
 
-              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 {filteredProjects.map((project, index) => (
                   <motion.div
                     key={index}
@@ -646,7 +636,6 @@ function App() {
 
                       <h3 className="text-xl font-bold text-gray-900 mb-2">{project.title}</h3>
                       <p className="text-gray-600 mb-4 flex-grow">{project.description}</p>
-                      
                       <div className="flex flex-wrap gap-2 mb-4">
                         {project.technologies.map((tech, techIndex) => (
                           <Badge 
@@ -747,3 +736,8 @@ function App() {
       )}
     </div>
   );
+
+
+
+export default App;
+
