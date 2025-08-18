@@ -25,7 +25,6 @@ import zabbixIcon from './assets/zabbix-icon.png'
 import windowsServerIcon from './assets/windows-server-icon.png'
 
 // Importando imagens de preview dos projetos
-// Os caminhos foram corrigidos para referenciar a pasta public diretamente
 import valluEngenhariaPreview from '/images/vallu_engenharia_preview.webp'
 import abelFutsalLogo from '/images/abel_futsal_logo.png'
 
@@ -363,7 +362,7 @@ function App() {
                       <button
                         key={item.id}
                         onClick={() => scrollToSection(item.id)}
-                        className={`w-full text-left px-3 py-3 rounded-md text-sm font-medium transition-colors border-b border-gray-100 last:border-b-0 ${
+                        className={`w-full text-left px-3 py-3 rounded-md text-sm font-medium transition-colors ${
                           activeSection === item.id
                             ? 'text-blue-600 bg-blue-50'
                             : 'text-gray-700 hover:text-blue-600 hover:bg-gray-50'
@@ -422,7 +421,7 @@ function App() {
                   <img
                     src={gabrielProfile}
                     alt="Gabriel Morgado"
-                    className="rounded-full w-64 h-64 mx-auto object-cover shadow-lg border-4 border-blue-200"
+                    className="w-full h-auto rounded-lg shadow-lg"
                   />
                 </motion.div>
               </div>
@@ -432,79 +431,70 @@ function App() {
           {/* Seção Sobre Mim */}
           <section id="sobre" className="py-16 px-4 sm:px-6 lg:px-8 bg-gray-50">
             <div className="max-w-6xl mx-auto">
-              <motion.div
-                initial={{ opacity: 0, y: 30 }}
+              <motion.h2
+                initial={{ opacity: 0, y: -20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6 }}
                 viewport={{ once: true }}
-                className="text-center mb-12"
+                className="text-3xl lg:text-4xl font-bold text-center text-gray-900 mb-12"
               >
-                <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-4">
-                  Sobre Mim
-                </h2>
-                <p className="text-lg text-gray-600 max-w-3xl mx-auto">
-                  Conheça um pouco da minha trajetória profissional
-                </p>
-              </motion.div>
-
-              <div className="grid lg:grid-cols-2 gap-12">
+                Sobre Mim
+              </motion.h2>
+              <div className="grid lg:grid-cols-2 gap-12 items-center">
                 <motion.div
                   initial={{ opacity: 0, x: -30 }}
                   whileInView={{ opacity: 1, x: 0 }}
                   transition={{ duration: 0.6 }}
                   viewport={{ once: true }}
+                  className="text-lg text-gray-700 leading-relaxed space-y-4"
                 >
-                  <h3 className="text-2xl font-bold text-gray-900 mb-6">Minha História</h3>
-                  <div className="space-y-4 text-gray-600">
-                    <p>
-                      Sou um profissional de Tecnologia da Informação com sólida experiência em administração 
-                      de bancos de dados, especializado em SQL Server e MariaDB. 
-                    </p>
-                    <p>
-                      Ao longo de mais de 4 anos de carreira, desenvolvi expertise em SQL Tuning, 
-                      modelagem e desenvolvimento de estruturas de banco de dados, sempre focando 
-                      em soluções eficientes e escaláveis.
-                    </p>
-                    <p>
-                      Minha experiência abrange Business Intelligence com ferramentas como SSIS, SSAS, 
-                      SSRS e Metabase BI. Tenho foco especial na criação de dashboards estratégicos 
-                      integrados ao ERP e GLPI para apoio à tomada de decisões empresariais.
-                    </p>
-                    <p>
-                      Atualmente, estou cursando Pós-graduação em Ciência de Dados e Inteligência Artificial, 
-                      expandindo meus conhecimentos para acompanhar as tendências tecnológicas mais atuais 
-                      e agregar ainda mais valor aos projetos em que atuo.
-                    </p>
-                  </div>
+                  <p>
+                    Com mais de 4 anos de experiência como Database Administrator Pleno, 
+                    minha jornada profissional tem sido focada em transformar dados em ativos estratégicos para empresas. 
+                    Sou especializado em administração e otimização de bancos de dados como SQL Server, Oracle e MariaDB/MySQL, 
+                    garantindo alta performance e segurança.
+                  </p>
+                  <p>
+                    Minha expertise se estende ao desenvolvimento de soluções de Business Intelligence, 
+                    onde crio dashboards e relatórios que fornecem insights acionáveis para a tomada de decisões. 
+                    Sou proficiente em ferramentas como Metabase BI, Power BI e Redash, e utilizo linguagens como T-SQL, PL/SQL e Python para automação e análise de dados.
+                  </p>
+                  <p>
+                    Além da paixão por dados, também atuo no desenvolvimento web, criando sites e aplicações que combinam funcionalidade e design intuitivo. 
+                    Minha abordagem é sempre orientada a resultados, buscando aprimorar processos e entregar valor através da tecnologia.
+                  </p>
+                  <p>
+                    Estou sempre em busca de novos desafios e oportunidades para aplicar minhas habilidades e expandir meu conhecimento 
+                    em um ambiente dinâmico e inovador.
+                  </p>
                 </motion.div>
-
                 <motion.div
                   initial={{ opacity: 0, x: 30 }}
                   whileInView={{ opacity: 1, x: 0 }}
                   transition={{ duration: 0.6 }}
                   viewport={{ once: true }}
                 >
-                  <h3 className="text-2xl font-bold text-gray-900 mb-6">Experiência Profissional</h3>
-                  <div className="space-y-6">
-                    {experiences.map((exp, index) => (
-                      <Card key={index} className="border-l-4 border-l-blue-600">
-                        <CardContent className="p-6">
-                          <h4 className="text-lg font-semibold text-gray-900">{exp.title}</h4>
-                          <p className="text-blue-600 font-medium">{exp.company}</p>
-                          <p className="text-sm text-gray-500 mb-3">{exp.period}</p>
-                          <p className="text-gray-600 mb-3">{exp.description}</p>
-                          <div className="space-y-1">
-                            {exp.achievements.map((achievement, i) => (
-                              <div key={i} className="flex items-center text-sm text-gray-600">
-                                <Award className="w-4 h-4 text-blue-600 mr-2 flex-shrink-0" />
-                                {achievement}
-                              </div>
-                            ))}
-                          </div>
-                        </CardContent>
-                      </Card>
-                    ))}
-                  </div>
+                  <Card className="p-6 shadow-lg rounded-lg">
+                    <CardContent className="p-0">
+                      <h3 className="text-2xl font-bold text-gray-900 mb-4">Minha Trajetória</h3>
+                      <ul className="space-y-4">
+                        {experiences.map((exp, index) => (
+                          <li key={index} className="border-l-4 border-blue-600 pl-4">
+                            <h4 className="text-xl font-semibold text-gray-800">{exp.title}</h4>
+                            <p className="text-blue-600 font-medium">{exp.company} ({exp.period})</p>
+                            <p className="text-gray-600 mt-2">{exp.description}</p>
+                            {exp.achievements && (
+                              <ul className="list-disc list-inside text-gray-600 mt-2">
+                                {exp.achievements.map((ach, idx) => (
+                                  <li key={idx}>{ach}</li>
+                                ))}
+                              </ul>
+                            )}
+                          </li>
+                        ))}
+                      </ul>
+                    </CardContent>
+                  </Card>
                 </motion.div>
               </div>
             </div>
@@ -513,45 +503,47 @@ function App() {
           {/* Seção Habilidades */}
           <section id="habilidades" className="py-16 px-4 sm:px-6 lg:px-8">
             <div className="max-w-6xl mx-auto">
-              <motion.div
-                initial={{ opacity: 0, y: 30 }}
+              <motion.h2
+                initial={{ opacity: 0, y: -20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6 }}
                 viewport={{ once: true }}
-                className="text-center mb-12"
+                className="text-3xl lg:text-4xl font-bold text-center text-gray-900 mb-12"
               >
-                <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-4">
-                  Minhas Habilidades
-                </h2>
-                <p className="text-lg text-gray-600 max-w-3xl mx-auto">
-                  Tecnologias e ferramentas que domino e utilizo em meus projetos.
-                </p>
-              </motion.div>
-
+                Minhas Habilidades
+              </motion.h2>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                {Object.entries(categorizedSkills).map(([category, skills]) => (
+                {Object.entries(categorizedSkills).map(([category, skills], index) => (
                   <motion.div
                     key={category}
                     initial={{ opacity: 0, y: 30 }}
                     whileInView={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.6, delay: 0.1 }}
+                    transition={{ duration: 0.6, delay: index * 0.1 }}
                     viewport={{ once: true }}
-                    className="bg-white rounded-lg shadow-md p-6"
                   >
-                    <h3 className="text-xl font-bold text-gray-900 mb-4 flex items-center">
-                      {category === 'Bancos de Dados' && <Database className="w-6 h-6 text-blue-600 mr-2" />}
-                      {category === 'Business Intelligence & ETL' && <BarChart3 className="w-6 h-6 text-blue-600 mr-2" />}
-                      {category === 'Linguagens & Scripts' && <Code className="w-6 h-6 text-blue-600 mr-2" />}
-                      {category === 'Desenvolvimento & Ferramentas' && <Server className="w-6 h-6 text-blue-600 mr-2" />}
-                      {category === 'Infraestrutura & Redes' && <Server className="w-6 h-6 text-blue-600 mr-2" />}
-                      {category === 'Suporte & Gestão' && <Users className="w-6 h-6 text-blue-600 mr-2" />}
-                      {category}
-                    </h3>
-                    <ul className="list-disc list-inside space-y-2 text-gray-600">
-                      {skills.map((skill, index) => (
-                        <li key={index}>{skill}</li>
-                      ))}
-                    </ul>
+                    <Card className="p-6 shadow-lg rounded-lg h-full flex flex-col">
+                      <CardContent className="p-0 flex-grow">
+                        <h3 className="text-2xl font-bold text-blue-600 mb-4 flex items-center">
+                          {category === 'Bancos de Dados' && <Database className="w-6 h-6 mr-2" />}
+                          {category === 'Business Intelligence & ETL' && <BarChart3 className="w-6 h-6 mr-2" />}
+                          {category === 'Linguagens & Scripts' && <Code className="w-6 h-6 mr-2" />}
+                          {category === 'Desenvolvimento & Ferramentas' && <Server className="w-6 h-6 mr-2" />}
+                          {category === 'Infraestrutura & Redes' && <Users className="w-6 h-6 mr-2" />}
+                          {category === 'Suporte & Gestão' && <Award className="w-6 h-6 mr-2" />}
+                          {category}
+                        </h3>
+                        <ul className="space-y-2 text-gray-700">
+                          {skills.map((skill, idx) => (
+                            <li key={idx} className="flex items-center">
+                              <svg className="w-4 h-4 text-blue-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                                <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                              </svg>
+                              {skill}
+                            </li>
+                          ))}
+                        </ul>
+                      </CardContent>
+                    </Card>
                   </motion.div>
                 ))}
               </div>
@@ -561,31 +553,24 @@ function App() {
           {/* Seção Projetos */}
           <section id="projetos" className="py-16 px-4 sm:px-6 lg:px-8 bg-gray-50">
             <div className="max-w-6xl mx-auto">
-              <motion.div
-                initial={{ opacity: 0, y: 30 }}
+              <motion.h2
+                initial={{ opacity: 0, y: -20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6 }}
                 viewport={{ once: true }}
-                className="text-center mb-12"
+                className="text-3xl lg:text-4xl font-bold text-center text-gray-900 mb-12"
               >
-                <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-4">
-                  Projetos
-                </h2>
-                <p className="text-lg text-gray-600 max-w-3xl mx-auto">
-                  Alguns dos meus principais trabalhos e conquistas
-                </p>
-              </motion.div>
-
-              {/* Filtros de Categoria */}
-              <div className="flex flex-wrap justify-center gap-3 mb-8">
+                Meus Projetos
+              </motion.h2>
+              <div className="flex justify-center space-x-4 mb-8 flex-wrap">
                 {categories.map((category) => (
                   <Button
                     key={category}
-                    variant={selectedCategory === category ? "default" : "outline"}
                     onClick={() => setSelectedCategory(category)}
-                    className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
+                    variant={selectedCategory === category ? "default" : "outline"}
+                    className={`mb-2 ${
                       selectedCategory === category
-                        ? "bg-blue-600 text-white hover:bg-blue-700"
+                        ? "bg-blue-600 text-white"
                         : "border-blue-600 text-blue-600 hover:bg-blue-50"
                     }`}
                   >
@@ -593,72 +578,55 @@ function App() {
                   </Button>
                 ))}
               </div>
-
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 {filteredProjects.map((project, index) => (
                   <motion.div
                     key={index}
-                    initial={{ opacity: 0, y: 20 }}
+                    initial={{ opacity: 0, y: 30 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.6, delay: index * 0.1 }}
                     viewport={{ once: true }}
-                    className="bg-white rounded-lg shadow-md overflow-hidden card-enhanced"
                   >
-                    <div className="p-6">
-                      {project.image ? (
+                    <Card className="shadow-lg rounded-lg overflow-hidden h-full flex flex-col">
+                      {project.image && (
                         <Dialog>
                           <DialogTrigger asChild>
-                            <div className="relative cursor-pointer group mb-4">
+                            <div className="relative w-full h-48 overflow-hidden cursor-pointer group">
                               <img
                                 src={project.image}
                                 alt={project.title}
-                                className="w-full h-48 object-cover rounded-md transition-transform group-hover:scale-105"
-                                loading="lazy"
+                                className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+                                loading={project.loading || "eager"}
                               />
-                              <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-20 transition-all duration-300 rounded-md flex items-center justify-center">
-                                <ExternalLink className="w-8 h-8 text-white opacity-0 group-hover:opacity-100 transition-opacity" />
+                              <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                <span className="text-white text-lg font-semibold">Ver Imagem</span>
                               </div>
                             </div>
                           </DialogTrigger>
-                          <DialogContent className="max-w-4xl">
-                            <img
-                              src={project.image}
-                              alt={project.title}
-                              className="w-full h-auto rounded-md"
-                            />
+                          <DialogContent className="max-w-screen-lg max-h-screen-lg overflow-auto">
+                            <img src={project.image} alt={project.title} className="w-full h-auto object-contain" />
                           </DialogContent>
                         </Dialog>
-                      ) : (
-                        <div className="w-full h-48 bg-gradient-to-br from-blue-100 to-blue-200 rounded-md mb-4 flex items-center justify-center">
-                          <project.icon className="w-16 h-16 text-blue-600" />
+                      )}
+                      <CardContent className="p-6 flex-grow flex flex-col">
+                        <h3 className="text-xl font-bold text-gray-900 mb-2">{project.title}</h3>
+                        <p className="text-gray-700 mb-4 flex-grow">{project.description}</p>
+                        <div className="flex flex-wrap gap-2 mb-4">
+                          {project.technologies.map((tech, techIndex) => (
+                            <Badge key={techIndex} variant="outline" className="bg-blue-100 text-blue-800 hover:bg-blue-200 transition-colors">
+                              {tech}
+                            </Badge>
+                          ))}
                         </div>
-                      )}
-
-                      <h3 className="text-xl font-bold text-gray-900 mb-2">{project.title}</h3>
-                      <p className="text-gray-600 mb-4 flex-grow">{project.description}</p>
-                      <div className="flex flex-wrap gap-2 mb-4">
-                        {project.technologies.map((tech, techIndex) => (
-                          <Badge 
-                            key={techIndex} 
-                            variant="secondary"
-                            className="bg-blue-100 text-blue-800 hover:bg-blue-200 transition-colors"
-                          >
-                            {tech}
-                          </Badge>
-                        ))}
-                      </div>
-                      
-                      {project.link && (
-                        <a
-                          href={project.link}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="inline-flex items-center text-blue-600 hover:text-blue-800 font-medium transition-colors hover-lift"
-                        >
-                          Ver Projeto <ExternalLink className="w-4 h-4 ml-1" />
-                        </a>
-                      )}
-                    </div>
+                        {project.link && (
+                          <Button asChild className="mt-auto bg-blue-600 hover:bg-blue-700 text-white hover-lift">
+                            <a href={project.link} target="_blank" rel="noopener noreferrer">
+                              Ver Projeto <ExternalLink className="ml-2 h-4 w-4" />
+                            </a>
+                          </Button>
+                        )}
+                      </CardContent>
+                    </Card>
                   </motion.div>
                 ))}
               </div>
@@ -666,24 +634,18 @@ function App() {
           </section>
 
           {/* Seção Contato */}
-          <section id="contato" className="py-16 px-4 sm:px-6 lg:px-8 bg-gray-50">
+          <section id="contato" className="py-16 px-4 sm:px-6 lg:px-8">
             <div className="max-w-6xl mx-auto">
-              <motion.div
-                initial={{ opacity: 0, y: 30 }}
+              <motion.h2
+                initial={{ opacity: 0, y: -20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6 }}
                 viewport={{ once: true }}
-                className="text-center mb-12"
+                className="text-3xl lg:text-4xl font-bold text-center text-gray-900 mb-12"
               >
-                <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-4">
-                  Entre em Contato
-                </h2>
-                <p className="text-lg text-gray-600">
-                  Ficarei feliz em discutir novas oportunidades e projetos.
-                </p>
-              </motion.div>
-
-              <div className="grid lg:grid-cols-2 gap-12 items-start">
+                Entre em Contato
+              </motion.h2>
+              <div className="grid lg:grid-cols-2 gap-12">
                 <motion.div
                   initial={{ opacity: 0, x: -30 }}
                   whileInView={{ opacity: 1, x: 0 }}
@@ -736,8 +698,8 @@ function App() {
       )}
     </div>
   );
-
-
+}
 
 export default App;
+
 
