@@ -33,12 +33,7 @@ function App() {
   const [selectedCategory, setSelectedCategory] = useState("Todos");
   const [isLoading, setIsLoading] = useState(true); // Novo estado para carregamento
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false); // Estado para menu mobile
-  const [theme, setTheme] = useState(() => {
-    if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
-      return 'dark';
-    }
-    return 'light';
-  });
+  const [theme, setTheme] = useState('light'); // Definindo tema padrão como claro
 
   // Definindo projetos antes de usar
   const projects = [
@@ -48,7 +43,7 @@ function App() {
       technologies: ['SQL Server', 'T-SQL', 'Performance Tuning'],
       icon: Database,
       link: null,
-      image: null
+      image: '/images/database_optimization_icon.png'
     },
     {
       title: 'Sistema HelpDesk GLPI',
@@ -56,7 +51,7 @@ function App() {
       technologies: ['GLPI', 'Linux', 'MySQL'],
       icon: Users,
       link: null,
-      image: null
+      image: '/images/glpi_icon.png'
     },
     {
       title: 'Dashboards Estratégicos com Metabase BI',
@@ -64,7 +59,7 @@ function App() {
       technologies: ['Metabase BI', 'SQL', 'Business Intelligence'],
       icon: BarChart3,
       link: null,
-      image: null
+      image: '/images/bi_dashboard_icon.png'
     },
     {
       title: 'Vallu Engenharia e Topografia',
@@ -90,7 +85,7 @@ function App() {
       technologies: ['Redes Sociais', 'Networking'],
       icon: Linkedin,
       link: 'https://www.linkedin.com/in/gabriel-morgado-s-merchor/',
-      image: null
+      image: '/images/gabriel_linkedin_profile.jpg'
     },
     {
       title: 'Meu GitHub',
@@ -417,12 +412,20 @@ function App() {
                   initial={{ opacity: 0, scale: 0.8 }}
                   animate={{ opacity: 1, scale: 1 }}
                   transition={{ duration: 0.6 }}
+                  className="flex justify-center lg:justify-end"
                 >
-                  <img
-                    src={gabrielProfile}
-                    alt="Gabriel Morgado"
-                    className="w-full h-auto rounded-lg shadow-lg"
-                  />
+                  <div className="relative">
+                    <div className="w-80 h-80 lg:w-96 lg:h-96 rounded-full overflow-hidden shadow-2xl border-8 border-white bg-gradient-to-br from-blue-100 to-blue-200">
+                      <img
+                        src={gabrielProfile}
+                        alt="Gabriel Morgado"
+                        className="w-full h-full object-cover"
+                      />
+                    </div>
+                    <div className="absolute -top-4 -right-4 w-16 h-16 bg-blue-600 rounded-full flex items-center justify-center shadow-lg">
+                      <Database className="w-8 h-8 text-white" />
+                    </div>
+                  </div>
                 </motion.div>
               </div>
             </div>
@@ -533,14 +536,29 @@ function App() {
                           {category}
                         </h3>
                         <ul className="space-y-2 text-gray-700">
-                          {skills.map((skill, idx) => (
-                            <li key={idx} className="flex items-center">
-                              <svg className="w-4 h-4 text-blue-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
-                                <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-                              </svg>
-                              {skill}
-                            </li>
-                          ))}
+                          {skills.map((skill, idx) => {
+                            // Encontrar ícone correspondente
+                            const skillWithIcon = skillsWithIcons.find(s => 
+                              skill.includes(s.name) || s.name.includes(skill.split(' ')[0])
+                            );
+                            
+                            return (
+                              <li key={idx} className="flex items-center">
+                                {skillWithIcon ? (
+                                  <img 
+                                    src={skillWithIcon.icon} 
+                                    alt={skill} 
+                                    className="w-5 h-5 mr-2 object-contain"
+                                  />
+                                ) : (
+                                  <svg className="w-4 h-4 text-blue-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                                  </svg>
+                                )}
+                                {skill}
+                              </li>
+                            );
+                          })}
                         </ul>
                       </CardContent>
                     </Card>
