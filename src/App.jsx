@@ -85,7 +85,7 @@ function App() {
       technologies: ['Redes Sociais', 'Networking'],
       icon: Linkedin,
       link: 'https://www.linkedin.com/in/gabriel-morgado-s-merchor/',
-      image: '/images/gabriel_linkedin_profile.jpg'
+      image: '/images/gabriel_profile.png'
     },
     {
       title: 'Meu GitHub',
@@ -93,7 +93,7 @@ function App() {
       technologies: ['Desenvolvimento', 'Versionamento', 'Código Aberto'],
       icon: Github,
       link: 'https://github.com/Morgado98',
-      image: null
+      image: '/images/gabriel_profile.png'
     }
   ]
 
@@ -674,11 +674,11 @@ function App() {
                   <h3 className="text-2xl font-bold text-gray-900 mb-4">Informações de Contato</h3>
                   <div className="flex items-center text-gray-700">
                     <Mail className="w-6 h-6 text-blue-600 mr-3" />
-                    <span>gabriel.morgado@example.com</span>
+                    <span>gabrielmorgado0798@gmail.com</span>
                   </div>
                   <div className="flex items-center text-gray-700">
                     <Phone className="w-6 h-6 text-blue-600 mr-3" />
-                    <a href="https://wa.me/5547999999999" target="_blank" rel="noopener noreferrer" className="hover:underline">(47) 99999-9999</a>
+                    <a href="https://wa.me/5511991105517" target="_blank" rel="noopener noreferrer" className="hover:underline">(11) 99110-5517</a>
                   </div>
                   <div className="flex items-center text-gray-700">
                     <MapPin className="w-6 h-6 text-blue-600 mr-3" />
