@@ -85,7 +85,7 @@ function App() {
       technologies: ['Redes Sociais', 'Networking'],
       icon: Linkedin,
       link: 'https://www.linkedin.com/in/gabriel-morgado-s-merchor/',
-      image: '/images/gabriel_profile.png'
+      image: '/images/gabriel_profile_new.jpg'
     },
     {
       title: 'Meu GitHub',
@@ -93,7 +93,7 @@ function App() {
       technologies: ['Desenvolvimento', 'Versionamento', 'Código Aberto'],
       icon: Github,
       link: 'https://github.com/Morgado98',
-      image: '/images/gabriel_profile.png'
+      image: '/images/gabriel_profile_new.jpg'
     }
   ]
 
@@ -192,6 +192,7 @@ function App() {
     { name: 'SQL Server', icon: sqlServerIcon, category: 'Bancos de Dados' },
     { name: 'Oracle', icon: oracleIcon, category: 'Bancos de Dados' },
     { name: 'MariaDB/MySQL', icon: mysqlIcon, category: 'Bancos de Dados' },
+    { name: 'NoSQL', icon: '🗄️', category: 'Bancos de Dados' },
     { name: 'Python', icon: pythonIcon, category: 'Linguagens & Scripts' },
     { name: 'HTML', icon: htmlIcon, category: 'Linguagens & Scripts' },
     { name: 'CSS', icon: cssIcon, category: 'Linguagens & Scripts' },
@@ -200,6 +201,15 @@ function App() {
     { name: 'AWS', icon: awsIcon, category: 'Cloud' },
     { name: 'Zabbix', icon: zabbixIcon, category: 'Infraestrutura & Redes' },
     { name: 'Windows Server', icon: windowsServerIcon, category: 'Infraestrutura & Redes' },
+    { name: 'Grafana', icon: '📊', category: 'Infraestrutura & Redes' },
+    { name: 'Docker', icon: '🐳', category: 'Desenvolvimento & Ferramentas' },
+    { name: 'Git', icon: '🔀', category: 'Desenvolvimento & Ferramentas' },
+    { name: 'Visual Studio', icon: '💻', category: 'Desenvolvimento & Ferramentas' },
+    { name: 'Power BI', icon: '📈', category: 'Business Intelligence & ETL' },
+    { name: 'Metabase BI', icon: '📊', category: 'Business Intelligence & ETL' },
+    { name: 'ETL', icon: '🔄', category: 'Business Intelligence & ETL' },
+    { name: 'GLPI', icon: '🎫', category: 'Suporte & Gestão' },
+    { name: 'Microsoft Office', icon: '📄', category: 'Suporte & Gestão' },
   ];
 
   const categorizedSkills = {

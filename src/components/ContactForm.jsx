@@ -56,26 +56,21 @@ export function ContactForm() {
     // Simulação de envio de e-mail no frontend (sem backend)
     try {
       // Aqui você integraria com um serviço como EmailJS, Formspree, etc.
-      // Por enquanto, apenas simula um sucesso
+      // Por enquanto, sempre retorna erro até a funcionalidade ser implementada
       await new Promise(resolve => setTimeout(resolve, 1000)); // Simula delay de rede
 
-      setSubmitStatus('success');
-      setStatusMessage('Mensagem enviada com sucesso! Em breve entrarei em contato.');
-      setFormData({
-        name: '',
-        email: '',
-        subject: '',
-        message: ''
-      });
+      // Sempre lança erro até a funcionalidade de envio de e-mail ser implementada
+      throw new Error('Funcionalidade de envio ainda não implementada');
+
     } catch (error) {
       setSubmitStatus('error');
-      setStatusMessage('Erro ao enviar mensagem. Tente novamente ou entre em contato diretamente.');
+      setStatusMessage('Funcionalidade de envio de e-mail ainda não implementada. Entre em contato diretamente pelo WhatsApp ou e-mail.');
     } finally {
       setIsSubmitting(false);
       setTimeout(() => {
         setSubmitStatus(null);
         setStatusMessage('');
-      }, 5000);
+      }, 8000);
     }
   };
 
