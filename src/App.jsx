@@ -555,7 +555,7 @@ function App() {
                             return (
                               <li key={idx} className="flex items-center">
                                 {skillWithIcon ? (
-                                  typeof skillWithIcon.icon === 'string' && skillWithIcon.icon.startsWith('http') ? (
+                                  typeof skillWithIcon.icon === 'string' && (skillWithIcon.icon.startsWith('/') || skillWithIcon.icon.startsWith('./assets')) ? (
                                     <img 
                                       src={skillWithIcon.icon} 
                                       alt={skill} 
