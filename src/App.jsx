@@ -609,24 +609,24 @@ function App() {
                   >
                     <Card className="shadow-lg rounded-lg overflow-hidden h-full flex flex-col">
                       {project.image && (
-                        <Dialog>
-                          <DialogTrigger asChild>
-                            <div className="relative w-full h-48 overflow-hidden cursor-pointer group">
-                              <img
-                                src={project.image}
-                                alt={project.title}
-                                className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
-                                loading={project.loading || "eager"}
-                              />
+                        <div className="relative w-full h-48 overflow-hidden cursor-pointer group">
+                          <img
+                            src={project.image}
+                            alt={project.title}
+                            className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+                            loading={project.loading || "eager"}
+                          />
+                          <Dialog>
+                            <DialogTrigger asChild>
                               <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                                 <span className="text-white text-lg font-semibold">Ver Imagem</span>
                               </div>
-                            </div>
-                          </DialogTrigger>
-                          <DialogContent className="max-w-screen-lg max-h-screen-lg overflow-auto">
-                            <img src={project.image} alt={project.title} className="w-full h-auto object-contain" />
-                          </DialogContent>
-                        </Dialog>
+                            </DialogTrigger>
+                            <DialogContent className="max-w-screen-lg max-h-screen-lg overflow-auto">
+                              <img src={project.image} alt={project.title} className="w-full h-auto object-contain" />
+                            </DialogContent>
+                          </Dialog>
+                        </div>
                       )}
                       <CardContent className="p-6 flex-grow flex flex-col">
                         <h3 className="text-xl font-bold text-gray-900 mb-2">{project.title}</h3>
